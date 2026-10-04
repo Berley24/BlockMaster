@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#00d4ff">
+    <meta name="description" content="Block Master - Puzzle viciante de blocos. Complete linhas, faça combos, suba nas ligas!">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Block Master">
+    <title>Block Master</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; width: 100%; overflow: hidden; background: #1a1a2e; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        #canvas-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        canvas { max-width: 100%; max-height: 100%; width: auto; height: auto; image-rendering: pixelated; }
+        .loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.5s, visibility 0.5s; }
+        .loading-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loading-logo { width: 120px; height: 120px; margin-bottom: 24px; animation: pulse 2s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        .loading-title { font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #00d4ff, #ff4444, #ffcc00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
+        .loading-subtitle { color: #889; font-size: 1.1rem; margin-bottom: 32px; }
+        .loading-bar-container { width: 280px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; }
+        .loading-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #00d4ff, #ff4444); border-radius: 3px; transition: width 0.3s ease; }
+        .loading-text { margin-top: 16px; color: #667; font-size: 0.9rem; }
+        .error-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #1a1a2e; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; padding: 24px; text-align: center; }
+        .error-screen.visible { display: flex; }
+        .error-icon { font-size: 4rem; margin-bottom: 16px; }
+        .error-title { color: #ff4444; font-size: 1.5rem; margin-bottom: 8px; }
+        .error-message { color: #889; margin-bottom: 24px; max-width: 400px; }
+        .retry-btn { background: linear-gradient(135deg, #00d4ff, #0066ff); color: white; border: none; padding: 14px 32px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: transform 0.2s; }
+        .retry-btn:hover { transform: scale(1.02); }
+        .retry-btn:active { transform: scale(0.98); }
+        .fullscreen-btn { position: fixed; bottom: 24px; right: 24px; background: rgba(0,0,0,0.7); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-size: 0.9rem; cursor: pointer; z-index: 100; display: none; backdrop-filter: blur(10px); }
+        .fullscreen-btn.visible { display: block; }
+        @media (max-width: 480px) { .loading-title { font-size: 2rem; } .fullscreen-btn { bottom: 16px; right: 16px; padding: 10px 16px; } }
+    </style>
+</head>
+<body>
+    <div id="loading-screen" class="loading-screen">
+        <svg class="loading-logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#16213e;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="blockGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#0066ff;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="blockGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ff4444;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#cc0000;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="blockGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ffcc00;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#ff9900;stop-opacity:1" />
+                </linearGradient>
+                <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="8" result="blur"/>
+                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+            </defs>
+            <rect width="512" height="512" rx="80" fill="url(#bgGrad)"/>
+            <g transform="translate(256, 256)" filter="url(#glow)">
+                <rect x="-120" y="-120" width="80" height="80" rx="8" fill="url(#blockGrad1)" transform="rotate(-15)"/>
+                <rect x="40" y="-120" width="80" height="80" rx="8" fill="url(#blockGrad2)" transform="rotate(10)"/>
+                <rect x="-120" y="40" width="80" height="80" rx="8" fill="url(#blockGrad3)" transform="rotate(5)"/>
+                <rect x="40" y="40" width="80" height="80" rx="8" fill="url(#blockGrad1)" transform="rotate(-5)"/>
+                <rect x="-80" y="-80" width="60" height="60" rx="6" fill="url(#blockGrad2)" opacity="0.9"/>
+                <rect x="-20" y="-80" width="60" height="60" rx="6" fill="url(#blockGrad3)" opacity="0.9"/>
+                <rect x="20" y="-80" width="60" height="60" rx="6" fill="url(#blockGrad1)" opacity="0.9"/>
+                <rect x="-80" y="-20" width="60" height="60" rx="6" fill="url(#blockGrad3)" opacity="0.9"/>
+                <rect x="-20" y="-20" width="60" height="60" rx="6" fill="url(#blockGrad1)" opacity="0.9"/>
+                <rect x="20" y="-20" width="60" height="60" rx="6" fill="url(#blockGrad2)" opacity="0.9"/>
+            </g>
+        </svg>
+        <h1 class="loading-title">BLOCK MASTER</h1>
+        <p class="loading-subtitle">Carregando puzzle viciante...</p>
+        <div class="loading-bar-container">
+            <div class="loading-bar" id="loading-bar"></div>
+        </div>
+        <p class="loading-text" id="loading-text">Inicializando...</p>
+    </div>
+
+    <div id="error-screen" class="error-screen">
+        <div class="error-icon">⚠️</div>
+        <h2 class="error-title">Erro ao Carregar</h2>
+        <p class="error-message" id="error-message">Não foi possível carregar o jogo. Verifique sua conexão e tente novamente.</p>
+        <button class="retry-btn" onclick="location.reload()">Tentar Novamente</button>
+    </div>
+
+    <button class="fullscreen-btn" id="fullscreen-btn" onclick="requestFullscreen()">🔲 Tela Cheia</button>
+
+    <div id="canvas-container"></div>
+
+    <script>
+        const loadingScreen = document.getElementById('loading-screen');
+        const loadingBar = document.getElementById('loading-bar');
+        const loadingText = document.getElementById('loading-text');
+        const errorScreen = document.getElementById('error-screen');
+        const errorMessage = document.getElementById('error-message');
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        const canvasContainer = document.getElementById('canvas-container');
+
+        let engine = null;
+        let startTime = Date.now();
+
+        function updateLoading(progress, text) {
+            loadingBar.style.width = (progress * 100) + '%';
+            loadingText.textContent = text;
+        }
+
+        function showError(msg) {
+            loadingScreen.classList.add('hidden');
+            errorScreen.classList.add('visible');
+            errorMessage.textContent = msg;
+        }
+
+        async function requestFullscreen() {
+            try {
+                if (canvasContainer.requestFullscreen) {
+                    await canvasContainer.requestFullscreen();
+                } else if (canvasContainer.webkitRequestFullscreen) {
+                    await canvasContainer.webkitRequestFullscreen();
+                } else if (canvasContainer.msRequestFullscreen) {
+                    await canvasContainer.msRequestFullscreen();
+                }
+                fullscreenBtn.style.display = 'none';
+            } catch (e) {
+                console.log('Fullscreen failed:', e);
+            }
+        }
+
+        document.addEventListener('fullscreenchange', () => {
+            fullscreenBtn.style.display = document.fullscreenElement ? 'none' : 'block';
+        });
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        }
+
+        const config = {
+            canvas: null,
+            onProgress: updateLoading,
+            onError: (msg) => showError(msg),
+            onLoad: () => {
+                loadingScreen.classList.add('hidden');
+                fullscreenBtn.classList.add('visible');
+                console.log('Game loaded in', Date.now() - startTime, 'ms');
+            }
+        };
+
+        const script = document.createElement('script');
+        script.src = 'index.js';
+        script.onload = () => {
+            if (typeof Godot !== 'undefined') {
+                engine = Godot(config);
+            } else if (typeof Module !== 'undefined') {
+                Module(config).then(instance => { engine = instance; });
+            }
+        };
+        script.onerror = () => showError('Falha ao carregar o jogo. Recarregue a página.');
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>

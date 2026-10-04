@@ -1,0 +1,79 @@
+[gd_scene load_steps=2 format=3 uid://itm9v8j7x2z1y]
+[ext_resource type="Script" path="res://scripts/ui/ShopItem.gd" id="1_1"]
+
+[node name="ShopItem" type="PanelContainer"]
+script = "res://scripts/ui/ShopItem.gd"
+layout_mode = 1
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+
+[node name="MainVBox" type="VBoxContainer" parent="."]
+theme_override_constants/separation = 8
+
+[node name="IconNameBox" type="HBoxContainer" parent="MainVBox"]
+theme_override_constants/separation = 10
+
+[node name="IconLabel" type="Label" parent="IconNameBox"]
+name = "IconLabel"
+text = "💰"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 36
+custom_minimum_size = Vector2(50, 50)
+
+[node name="NameLabel" type="Label" parent="IconNameBox"]
+name = "NameLabel"
+text = "Pacote de Moedas"
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="PopularBadge" type="Label" parent="IconNameBox"]
+name = "PopularBadge"
+text = "⭐ MAIS POPULAR"
+horizontal_alignment = 2
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(1, 0.9, 0.2, 1)
+visible = false
+
+[node name="DescLabel" type="Label" parent="MainVBox"]
+name = "DescLabel"
+text = "Descrição do item"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
+
+[node name="PriceBox" type="HBoxContainer" parent="MainVBox"]
+theme_override_constants/separation = 15
+
+[node name="PriceLabel" type="Label" parent="PriceBox"]
+name = "PriceLabel"
+text = "R$ 0,00"
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
+
+[node name="CoinsPriceLabel" type="Label" parent="PriceBox"]
+name = "CoinsPriceLabel"
+text = "ou 500 moedas"
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.7, 1, 0.7, 1)
+visible = false
+
+[node name="OwnedBadge" type="Label" parent="MainVBox"]
+name = "OwnedBadge"
+text = "✅ JÁ ADQUIRIDO"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.4, 1, 0.5, 1)
+visible = false
+
+[node name="BuyButton" type="Button" parent="MainVBox"]
+name = "BuyButton"
+text = "COMPRAR"
+theme_override_font_sizes/font_size = 18
+custom_minimum_size = Vector2(0, 45)

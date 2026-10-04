@@ -1,0 +1,106 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[android]
+
+modules="org/godotengine/godot/GodotPayment,org/godotengine/godot/GodotAdMob"
+gradle_user_props="user.properties"
+
+[application]
+
+config/name="Block Master"
+config/description="Puzzle viciante de blocos - Complete linhas, faça combos, suba nas ligas!"
+run/main_scene="res://scenes/menus/MainMenu.tscn"
+config/features=PackedStringArray("4.7")
+config/icon="res://assets/ui/icon.png"
+
+[autoload]
+
+GameManager="res://scripts/autoload/GameManager.gd"
+MonetizationManager="res://scripts/autoload/MonetizationManager.gd"
+SaveManager="res://scripts/autoload/SaveManager.gd"
+LeaderboardManager="res://scripts/autoload/LeaderboardManager.gd"
+AudioManager="res://scripts/autoload/AudioManager.gd"
+NotificationManager="res://scripts/autoload/NotificationManager.gd"
+
+[display]
+
+window/size/viewport_width=1080
+window/size/viewport_height=1920
+window/mode/width=1080
+window/mode/height=1920
+
+[input]
+
+gamepad/rumble_supported=true
+
+[input_map]
+
+move_left={
+"deadzone": 0.5,
+"events": [{
+"physical_keycode": "Left",
+"type": "Key"
+}]
+}
+move_right={
+"deadzone": 0.5,
+"events": [{
+"physical_keycode": "Right",
+"type": "Key"
+}]
+}
+move_up={
+"deadzone": 0.5,
+"events": [{
+"physical_keycode": "Up",
+"type": "Key"
+}]
+}
+move_down={
+"deadzone": 0.5,
+"events": [{
+"physical_keycode": "Down",
+"type": "Key"
+}]
+}
+click={
+"deadzone": 0.5,
+"events": [{
+"physical_keycode": "Space",
+"type": "Key"
+}, {
+"button_index": 0,
+"type": "MouseButton"
+}]
+}
+pause={
+"deadzone": 0.5,
+"events": [{
+"physical_keycode": "Escape",
+"type": "Key"
+}]
+}
+
+[internationalization]
+
+locale/test="pt_BR"
+locale/fallback="pt_BR"
+
+[plugins]
+
+android/plugins/org/godotengine/godot/GodotPayment="res://addons/godotpayment/AndroidManifest.xml"
+android/plugins/org/godotengine/godot/GodotAdMob="res://addons/godotadmob/AndroidManifest.xml"
+
+[rendering]
+
+graphics/renderer/rendering_method="mobile"
+canvas_rendering/batching/use_batching=true
+canvas_rendering/batching/max_join_item_commands=64

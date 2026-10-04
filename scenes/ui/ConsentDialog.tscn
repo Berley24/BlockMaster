@@ -1,0 +1,165 @@
+[gd_scene load_steps=3 format=3 uid://cns9v8j7x2z1y]
+[ext_resource type="Script" path="res://scripts/ui/ConsentDialog.gd" id="1_1"]
+
+[node name="ConsentDialog" type="Control"]
+script = "res://scripts/ui/ConsentDialog.gd"
+layout_mode = 3
+anchors_preset = 15
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 3
+anchors_preset = 15
+color = Color(0, 0, 0, 0.85)
+
+[node name="Panel" type="PanelContainer" parent="."]
+name = "Panel"
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280
+offset_top = -350
+offset_right = 280
+offset_bottom = 350
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+theme_override_constants/separation = 15
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+name = "Title"
+text = "🔒 Privacidade e Consentimento"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="Text" type="Label" parent="VBoxContainer"]
+name = "Text"
+text = "Respeitamos sua privacidade. Escolha como seus dados serão usados:\n\n• Anúncios personalizados: mais relevantes (usam ID de publicidade)\n• Analytics: nos ajudam a melhorar o jogo (anônimo)\n• Notificações: lembretes de recompensa diária, torneios\n\nVocê pode alterar isso depois nas Configurações."
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+autowrap_mode = 2
+
+[node name="OptionsBox" type="VBoxContainer" parent="VBoxContainer"]
+theme_override_constants/separation = 10
+
+[node name="PersonalizedAdsCheck" type="CheckButton" parent="OptionsBox"]
+name = "PersonalizedAdsCheck"
+text = "📊 Anúncios personalizados (AdMob)"
+theme_override_font_sizes/font_size = 16
+button_pressed = true
+
+[node name="AnalyticsCheck" type="CheckButton" parent="OptionsBox"]
+name = "AnalyticsCheck"
+text = "📈 Analytics anônimos (melhorar o jogo)"
+theme_override_font_sizes/font_size = 16
+button_pressed = true
+
+[node name="NotificationsCheck" type="CheckButton" parent="OptionsBox"]
+name = "NotificationsCheck"
+text = "🔔 Notificações push (diária, torneios)"
+theme_override_font_sizes/font_size = 16
+button_pressed = true
+
+[node name="ButtonsBox" type="HBoxContainer" parent="VBoxContainer"]
+theme_override_constants/separation = 10
+
+[node name="RejectBtn" type="Button" parent="ButtonsBox"]
+name = "RejectBtn"
+text = "Recusar tudo"
+theme_override_font_sizes/font_size = 18
+custom_minimum_size = Vector2(0, 50)
+theme_override_colors/font_color = Color(1, 0.6, 0.6, 1)
+
+[node name="CustomizeBtn" type="Button" parent="ButtonsBox"]
+name = "CustomizeBtn"
+text = "Personalizar"
+theme_override_font_sizes/font_size = 18
+custom_minimum_size = Vector2(0, 50)
+
+[node name="AcceptBtn" type="Button" parent="ButtonsBox"]
+name = "AcceptBtn"
+text = "Aceitar tudo"
+theme_override_font_sizes/font_size = 18
+custom_minimum_size = Vector2(0, 50)
+theme_override_colors/font_color = Color(0.6, 1, 0.6, 1)
+
+[node name="LinksBox" type="HBoxContainer" parent="VBoxContainer"]
+theme_override_constants/separation = 20
+
+[node name="PrivacyLink" type="LinkButton" parent="LinksBox"]
+name = "PrivacyLink"
+text = "📄 Política de Privacidade"
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.7, 0.9, 1, 1)
+
+[node name="TermsLink" type="LinkButton" parent="LinksBox"]
+name = "TermsLink"
+text = "📋 Termos de Uso"
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.7, 0.9, 1, 1)
+
+[node name="CustomizePanel" type="PanelContainer" parent="."]
+name = "CustomizePanel"
+visible = false
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280
+offset_top = -300
+offset_right = 280
+offset_bottom = 300
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CustomizePanel"]
+theme_override_constants/separation = 15
+
+[node name="Title2" type="Label" parent="VBoxContainer2"]
+text = "⚙️ Personalizar Privacidade"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="Text2" type="Label" parent="VBoxContainer2"]
+text = "Configure cada opção individualmente:"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+
+[node name="OptionsBox2" type="VBoxContainer" parent="VBoxContainer2"]
+theme_override_constants/separation = 15
+
+[node name="PersonalizedAdsCheck2" type="CheckButton" parent="OptionsBox2"]
+text = "📊 Anúncios personalizados\nUsam seu ID de publicidade para mostrar anúncios mais relevantes. Sem isso, verá anúncios genéricos."
+theme_override_font_sizes/font_size = 16
+button_pressed = true
+
+[node name="AnalyticsCheck2" type="CheckButton" parent="OptionsBox2"]
+text = "📈 Analytics anônimos\nNos ajudam a entender como o jogo é jogado para melhorar (nível médio, retenção, crashes). Não identifica você."
+theme_override_font_sizes/font_size = 16
+button_pressed = true
+
+[node name="NotificationsCheck2" type="CheckButton" parent="OptionsBox2"]
+text = "🔔 Notificações push\nLembretes de recompensa diária (10h), torneio semanal (seg 19h), vida recuperada. Pode desativar no Android também."
+theme_override_font_sizes/font_size = 16
+button_pressed = true
+
+[node name="ButtonsBox2" type="HBoxContainer" parent="VBoxContainer2"]
+theme_override_constants/separation = 10
+
+[node name="BackCustomizeBtn" type="Button" parent="ButtonsBox2"]
+name = "BackCustomizeBtn"
+text = "Voltar"
+theme_override_font_sizes/font_size = 18
+custom_minimum_size = Vector2(0, 50)
+
+[node name="SaveCustomizeBtn" type="Button" parent="ButtonsBox2"]
+name = "SaveCustomizeBtn"
+text = "Salvar escolhas"
+theme_override_font_sizes/font_size = 18
+custom_minimum_size = Vector2(0, 50)
+theme_override_colors/font_color = Color(0.6, 1, 0.6, 1)

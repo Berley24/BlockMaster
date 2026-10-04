@@ -1,0 +1,253 @@
+[gd_scene load_steps=4 format=3 uid://skm9v8j7x2z1y]
+[ext_resource type="Script" path="res://scripts/menus/ShopMenu.gd" id="1_1"]
+[ext_resource type="Script" path="res://scripts/ui/ShopItem.gd" id="1_2"]
+
+[node name="ShopMenu" type="Control"]
+script = "res://scripts/menus/ShopMenu.gd"
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 3
+anchors_preset = 15
+color = Color(0.05, 0.06, 0.1, 1)
+
+[node name="TopBar" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_top = 10
+offset_bottom = 90
+theme_override_constants/separation = 20
+
+[node name="BackButton" type="Button" parent="TopBar"]
+text = "← VOLTAR"
+theme_override_font_sizes/font_size = 22
+custom_minimum_size = Vector2(120, 50)
+
+[node name="TitleLabel" type="Label" parent="TopBar"]
+text = "🏪 LOJA"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
+
+[node name="CoinsDisplay" type="HBoxContainer" parent="TopBar"]
+theme_override_constants/separation = 8
+custom_minimum_size = Vector2(180, 50)
+
+[node name="CoinIcon" type="TextureRect" parent="CoinsDisplay"]
+custom_minimum_size = Vector2(40, 40)
+stretch_mode = 1
+
+[node name="CoinsLabel" type="Label" parent="CoinsDisplay"]
+text = "0"
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
+
+[node name="Tabs" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_left = 0.5
+anchor_top = 0.0
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -250
+offset_top = 100
+offset_right = 250
+offset_bottom = 160
+theme_override_constants/separation = 10
+
+[node name="TabCoins" type="TabButton" parent="Tabs"]
+text = "💰 MOEDAS"
+custom_minimum_size = Vector2(150, 45)
+theme_override_font_sizes/font_size = 20
+
+[node name="TabNoAds" type="TabButton" parent="Tabs"]
+text = "🚫 SEM ANÚNCIOS"
+custom_minimum_size = Vector2(150, 45)
+theme_override_font_sizes/font_size = 20
+
+[node name="TabPowerups" type="TabButton" parent="Tabs"]
+text = "⚡ POWER-UPS"
+custom_minimum_size = Vector2(150, 45)
+theme_override_font_sizes/font_size = 20
+
+[node name="TabLives" type="TabButton" parent="Tabs"]
+text = "❤️ VIDAS"
+custom_minimum_size = Vector2(150, 45)
+theme_override_font_sizes/font_size = 20
+
+[node name="ContentArea" type="ScrollContainer" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_left = 0.5
+anchor_top = 0.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -270
+offset_top = 170
+offset_right = 270
+offset_bottom = -20
+
+[node name="ContentVBox" type="VBoxContainer" parent="ContentArea"]
+theme_override_constants/separation = 15
+
+[node name="CoinsCategory" type="VBoxContainer" parent="ContentVBox"]
+theme_override_constants/separation = 15
+
+[node name="CoinsTitle" type="Label" parent="CoinsCategory"]
+text = "PACOTES DE MOEDAS"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
+
+[node name="CoinsGrid" type="GridContainer" parent="CoinsCategory"]
+columns = 2
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+
+[node name="CoinPack100" type="ShopItem" parent="CoinsGrid"]
+script = "res://scripts/ui/ShopItem.gd"
+custom_minimum_size = Vector2(240, 140)
+
+[node name="CoinPack500" type="ShopItem" parent="CoinsGrid"]
+script = "res://scripts/ui/ShopItem.gd"
+custom_minimum_size = Vector2(240, 140)
+
+[node name="CoinPack1200" type="ShopItem" parent="CoinsGrid"]
+script = "res://scripts/ui/ShopItem.gd"
+custom_minimum_size = Vector2(240, 140)
+
+[node name="CoinPack2500" type="ShopItem" parent="CoinsGrid"]
+script = "res://scripts/ui/ShopItem.gd"
+custom_minimum_size = Vector2(240, 140)
+
+[node name="NoAdsCategory" type="VBoxContainer" parent="ContentVBox"]
+visible = false
+theme_override_constants/separation = 15
+
+[node name="NoAdsTitle" type="Label" parent="NoAdsCategory"]
+text = "REMOVER ANÚNCIOS"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(0.4, 1, 0.6, 1)
+
+[node name="NoAdsGrid" type="GridContainer" parent="NoAdsCategory"]
+columns = 2
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+
+[node name="NoAdsMonthly" type="ShopItem" parent="NoAdsGrid"]
+script = "res://scripts/ui/ShopItem.gd"
+custom_minimum_size = Vector2(240, 140)
+
+[node name="NoAdsPermanent" type="ShopItem" parent="NoAdsGrid"]
+script = "res://scripts/ui/ShopItem.gd"
+custom_minimum_size = Vector2(240, 140)
+
+[node name="PowerupsCategory" type="VBoxContainer" parent="ContentVBox"]
+visible = false
+theme_override_constants/separation = 15
+
+[node name="PowerupsTitle" type="Label" parent="PowerupsCategory"]
+text = "POWER-UPS ESPECIAIS"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(1, 0.6, 0.2, 1)
+
+[node name="PowerupsGrid" type="GridContainer" parent="PowerupsCategory"]
+columns = 2
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+
+[node name="PowerupBomb" type="ShopItem" parent="PowerupsGrid"]
+script = "res://scripts/ui/ShopItem.gd"
+custom_minimum_size = Vector2(240, 140)
+
+[node name="PowerupShuffle" type="ShopItem" parent="PowerupsGrid"]
+script = "res://scripts/ui/ShopItem.gd"
+custom_minimum_size = Vector2(240, 140)
+
+[node name="PowerupUndo" type="ShopItem" parent="PowerupsGrid"]
+script = "res://scripts/ui/ShopItem.gd"
+custom_minimum_size = Vector2(240, 140)
+
+[node name="PowerupColorClear" type="ShopItem" parent="PowerupsGrid"]
+script = "res://scripts/ui/ShopItem.gd"
+custom_minimum_size = Vector2(240, 140)
+
+[node name="LivesCategory" type="VBoxContainer" parent="ContentVBox"]
+visible = false
+theme_override_constants/separation = 15
+
+[node name="LivesTitle" type="Label" parent="LivesCategory"]
+text = "VIDAS EXTRAS"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(1, 0.4, 0.6, 1)
+
+[node name="LivesGrid" type="GridContainer" parent="LivesCategory"]
+columns = 2
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+
+[node name="LifePack1" type="ShopItem" parent="LivesGrid"]
+script = "res://scripts/ui/ShopItem.gd"
+custom_minimum_size = Vector2(240, 140)
+
+[node name="LifePack5" type="ShopItem" parent="LivesGrid"]
+script = "res://scripts/ui/ShopItem.gd"
+custom_minimum_size = Vector2(240, 140)
+
+[node name="LifePackInfinite" type="ShopItem" parent="LivesGrid"]
+script = "res://scripts/ui/ShopItem.gd"
+custom_minimum_size = Vector2(240, 140)
+
+[node name="PurchasePopup" type="ColorRect" parent="."]
+layout_mode = 3
+anchors_preset = 15
+color = Color(0, 0, 0, 0.9)
+visible = false
+
+[node name="PurchasePanel" type="VBoxContainer" parent="PurchasePopup"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200
+offset_top = -150
+offset_right = 200
+offset_bottom = 150
+theme_override_constants/separation = 15
+
+[node name="PurchaseTitle" type="Label" parent="PurchasePanel"]
+text = "Confirmar Compra"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="PurchaseDescription" type="Label" parent="PurchasePanel"]
+text = "Você deseja comprar este item?"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+
+[node name="PurchasePrice" type="Label" parent="PurchasePanel"]
+text = "R$ 0,00"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
+
+[node name="PurchaseConfirm" type="Button" parent="PurchasePanel"]
+text = "COMPRAR"
+theme_override_font_sizes/font_size = 24
+custom_minimum_size = Vector2(0, 60)
+
+[node name="PurchaseCancel" type="Button" parent="PurchasePanel"]
+text = "CANCELAR"
+theme_override_font_sizes/font_size = 20
+custom_minimum_size = Vector2(0, 50)

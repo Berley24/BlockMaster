@@ -1,0 +1,323 @@
+[gd_scene load_steps=3 format=3 uid://bkq9v8j7x2z1y]
+[ext_resource type="Script" path="res://scripts/game/Block.tscn" id="1_1"]
+[ext_resource type="Script" path="res://scripts/game/Grid.tscn" id="1_2"]
+
+[node name="GameScene" type="Node2D"]
+script = "res://scripts/game/GameScene.gd"
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 3
+anchors_preset = 15
+color = Color(0.08, 0.09, 0.12, 1)
+
+[node name="GameArea" type="MarginContainer" parent="."]
+layout_mode = 3
+anchors_preset = 15
+theme_override_constants/h_margin = 40
+theme_override_constants/v_margin = 120
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameArea"]
+theme_override_constants/separation = 10
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
+columns = 10
+custom_minimum_size = Vector2(0, 0)
+
+[node name="Grid" type="Grid" parent="GridContainer"]
+layout_mode = 1
+
+[node name="NextBlocksPanel" type="HBoxContainer" parent="VBoxContainer"]
+theme_override_constants/separation = 8
+custom_minimum_size = Vector2(0, 120)
+
+[node name="NextBlock1" type="PanelContainer" parent="NextBlocksPanel"]
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+custom_minimum_size = Vector2(100, 100)
+
+[node name="BlockPreview" type="BlockPreview" parent="NextBlock1"]
+script = "res://scripts/game/BlockPreview.gd"
+
+[node name="NextBlock2" type="PanelContainer" parent="NextBlocksPanel"]
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+custom_minimum_size = Vector2(100, 100)
+
+[node name="BlockPreview2" type="BlockPreview" parent="NextBlock2"]
+script = "res://scripts/game/BlockPreview.gd"
+
+[node name="NextBlock3" type="PanelContainer" parent="NextBlocksPanel"]
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+custom_minimum_size = Vector2(100, 100)
+
+[node name="BlockPreview3" type="BlockPreview" parent="NextBlock3"]
+script = "res://scripts/game/BlockPreview.gd"
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layout_mode = 3
+anchors_preset = 15
+
+[node name="TopBar" type="HBoxContainer" parent="HUD"]
+layout_mode = 1
+anchors_preset = 9
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_top = 10
+offset_bottom = 90
+theme_override_constants/separation = 20
+
+[node name="ScoreLabel" type="Label" parent="TopBar"]
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+custom_minimum_size = Vector2(150, 50)
+
+[node name="HighScoreLabel" type="Label" parent="TopBar"]
+text = "Best: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
+custom_minimum_size = Vector2(120, 50)
+
+[node name="LevelLabel" type="Label" parent="TopBar"]
+text = "Nv. 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(0.5, 0.8, 1, 1)
+custom_minimum_size = Vector2(80, 50)
+
+[node name="CoinsDisplay" type="HBoxContainer" parent="TopBar"]
+theme_override_constants/separation = 5
+custom_minimum_size = Vector2(120, 50)
+
+[node name="CoinIcon" type="TextureRect" parent="CoinsDisplay"]
+texture = null
+custom_minimum_size = Vector2(32, 32)
+stretch_mode = 1
+
+[node name="CoinsLabel" type="Label" parent="CoinsDisplay"]
+text = "0"
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
+
+[node name="LivesDisplay" type="HBoxContainer" parent="TopBar"]
+theme_override_constants/separation = 5
+custom_minimum_size = Vector2(150, 50)
+
+[node name="HeartIcon" type="TextureRect" parent="LivesDisplay"]
+texture = null
+custom_minimum_size = Vector2(32, 32)
+stretch_mode = 1
+
+[node name="LivesLabel" type="Label" parent="LivesDisplay"]
+text = "5/5"
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
+
+[node name="ComboDisplay" type="Label" parent="TopBar"]
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(1, 0.6, 0.2, 1)
+visible = false
+custom_minimum_size = Vector2(200, 50)
+
+[node name="PauseButton" type="TextureButton" parent="TopBar"]
+texture_normal = null
+custom_minimum_size = Vector2(50, 50)
+stretch_mode = 1
+
+[node name="BottomBar" type="HBoxContainer" parent="HUD"]
+layout_mode = 1
+anchors_preset = 12
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -100
+offset_bottom = -10
+theme_override_constants/separation = 15
+
+[node name="PowerUpBomb" type="PowerUpButton" parent="BottomBar"]
+script = "res://scripts/ui/PowerUpButton.gd"
+custom_minimum_size = Vector2(70, 70)
+
+[node name="PowerUpShuffle" type="PowerUpButton" parent="BottomBar"]
+script = "res://scripts/ui/PowerUpButton.gd"
+custom_minimum_size = Vector2(70, 70)
+
+[node name="PowerUpUndo" type="PowerUpButton" parent="BottomBar"]
+script = "res://scripts/ui/PowerUpButton.gd"
+custom_minimum_size = Vector2(70, 70)
+
+[node name="PowerUpColorClear" type="PowerUpButton" parent="BottomBar"]
+script = "res://scripts/ui/PowerUpButton.gd"
+custom_minimum_size = Vector2(70, 70)
+
+[node name="GameOverOverlay" type="ColorRect" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+color = Color(0, 0, 0, 0.85)
+visible = false
+
+[node name="GameOverPanel" type="VBoxContainer" parent="GameOverOverlay"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180
+offset_top = -200
+offset_right = 180
+offset_bottom = 200
+theme_override_constants/separation = 15
+
+[node name="GameOverTitle" type="Label" parent="GameOverPanel"]
+text = "FIM DE JOGO"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 48
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
+
+[node name="FinalScoreLabel" type="Label" parent="GameOverPanel"]
+text = "Pontuação: 0"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="BestScoreLabel" type="Label" parent="GameOverPanel"]
+text = "Recorde: 0"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
+
+[node name="CoinsEarnedLabel" type="Label" parent="GameOverPanel"]
+text = "+0 moedas"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
+
+[node name="ContinueButton" type="Button" parent="GameOverPanel"]
+text = "CONTINUAR (100 moedas)"
+theme_override_font_sizes/font_size = 22
+custom_minimum_size = Vector2(0, 60)
+
+[node name="WatchAdButton" type="Button" parent="GameOverPanel"]
+text = "VER ANÚNCIO PARA CONTINUAR"
+theme_override_font_sizes/font_size = 20
+custom_minimum_size = Vector2(0, 55)
+
+[node name="MenuButton" type="Button" parent="GameOverPanel"]
+text = "MENU PRINCIPAL"
+theme_override_font_sizes/font_size = 20
+custom_minimum_size = Vector2(0, 50)
+
+[node name="RetryButton" type="Button" parent="GameOverPanel"]
+text = "TENTAR NOVAMENTE"
+theme_override_font_sizes/font_size = 22
+custom_minimum_size = Vector2(0, 60)
+
+[node name="PauseOverlay" type="ColorRect" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+color = Color(0, 0, 0, 0.7)
+visible = false
+
+[node name="PausePanel" type="VBoxContainer" parent="PauseOverlay"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150
+offset_top = -150
+offset_right = 150
+offset_bottom = 150
+theme_override_constants/separation = 15
+
+[node name="PauseTitle" type="Label" parent="PausePanel"]
+text = "PAUSADO"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 48
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="ResumeButton" type="Button" parent="PausePanel"]
+text = "CONTINUAR"
+theme_override_font_sizes/font_size = 24
+custom_minimum_size = Vector2(0, 60)
+
+[node name="RestartButton" type="Button" parent="PausePanel"]
+text = "REINICIAR"
+theme_override_font_sizes/font_size = 24
+custom_minimum_size = Vector2(0, 60)
+
+[node name="PauseMenuButton" type="Button" parent="PausePanel"]
+text = "MENU PRINCIPAL"
+theme_override_font_sizes/font_size = 24
+custom_minimum_size = Vector2(0, 60)
+
+[node name="SettingsButton" type="Button" parent="PausePanel"]
+text = "CONFIGURAÇÕES"
+theme_override_font_sizes/font_size = 22
+custom_minimum_size = Vector2(0, 55)
+
+[node name="DailyRewardPopup" type="ColorRect" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+color = Color(0, 0, 0, 0.9)
+visible = false
+
+[node name="DailyRewardPanel" type="VBoxContainer" parent="DailyRewardPopup"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200
+offset_top = -250
+offset_right = 200
+offset_bottom = 250
+theme_override_constants/separation = 15
+
+[node name="DailyTitle" type="Label" parent="DailyRewardPanel"]
+text = "🎁 RECOMPENSA DIÁRIA"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
+
+[node name="StreakLabel" type="Label" parent="DailyRewardPanel"]
+text = "Sequência: 1 dia"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.7, 1, 0.7, 1)
+
+[node name="RewardItems" type="VBoxContainer" parent="DailyRewardPanel"]
+theme_override_constants/separation = 10
+
+[node name="ClaimButton" type="Button" parent="DailyRewardPanel"]
+text = "RESGATAR"
+theme_override_font_sizes/font_size = 28
+custom_minimum_size = Vector2(0, 70)
+
+[node name="CloseDailyButton" type="Button" parent="DailyRewardPanel"]
+text = "FECHAR"
+theme_override_font_sizes/font_size = 18
+custom_minimum_size = Vector2(0, 45)

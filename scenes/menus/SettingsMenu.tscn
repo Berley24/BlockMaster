@@ -1,0 +1,233 @@
+[gd_scene load_steps=2 format=3 uid://stg9v8j7x2z1y]
+[ext_resource type="Script" path="res://scripts/menus/SettingsMenu.gd" id="1_1"]
+
+[node name="SettingsMenu" type="Control"]
+script = "res://scripts/menus/SettingsMenu.gd"
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 3
+anchors_preset = 15
+color = Color(0.05, 0.06, 0.1, 1)
+
+[node name="TopBar" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_top = 10
+offset_bottom = 90
+theme_override_constants/separation = 20
+
+[node name="BackButton" type="Button" parent="TopBar"]
+text = "← VOLTAR"
+theme_override_font_sizes/font_size = 22
+custom_minimum_size = Vector2(120, 50)
+
+[node name="TitleLabel" type="Label" parent="TopBar"]
+text = "⚙️ CONFIGURAÇÕES"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(0.7, 0.9, 1, 1)
+
+[node name="SettingsArea" type="ScrollContainer" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_left = 0.5
+anchor_top = 0.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -270
+offset_top = 110
+offset_right = 270
+offset_bottom = -20
+
+[node name="SettingsVBox" type="VBoxContainer" parent="SettingsArea"]
+theme_override_constants/separation = 20
+
+[node name="AudioSection" type="VBoxContainer" parent="SettingsVBox"]
+theme_override_constants/separation = 15
+
+[node name="AudioTitle" type="Label" parent="AudioSection"]
+text = "🔊 ÁUDIO"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(0.7, 0.9, 1, 1)
+
+[node name="MusicVolumeBox" type="HBoxContainer" parent="AudioSection"]
+theme_override_constants/separation = 15
+
+[node name="MusicLabel" type="Label" parent="MusicVolumeBox"]
+text = "Música"
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 20
+custom_minimum_size = Vector2(120, 40)
+
+[node name="MusicSlider" type="HSlider" parent="MusicVolumeBox"]
+min_value = 0.0
+max_value = 1.0
+step = 0.05
+value = 0.5
+custom_minimum_size = Vector2(0, 40)
+
+[node name="MusicValue" type="Label" parent="MusicVolumeBox"]
+text = "50%"
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+custom_minimum_size = Vector2(50, 40)
+
+[node name="SFXVolumeBox" type="HBoxContainer" parent="AudioSection"]
+theme_override_constants/separation = 15
+
+[node name="SFXLabel" type="Label" parent="SFXVolumeBox"]
+text = "Efeitos"
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 20
+custom_minimum_size = Vector2(120, 40)
+
+[node name="SFXSlider" type="HSlider" parent="SFXVolumeBox"]
+min_value = 0.0
+max_value = 1.0
+step = 0.05
+value = 0.8
+custom_minimum_size = Vector2(0, 40)
+
+[node name="SFXValue" type="Label" parent="SFXVolumeBox"]
+text = "80%"
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+custom_minimum_size = Vector2(50, 40)
+
+[node name="MuteCheckbox" type="CheckButton" parent="AudioSection"]
+text = "🔇 Mutar tudo"
+theme_override_font_sizes/font_size = 20
+
+[node name="GameplaySection" type="VBoxContainer" parent="SettingsVBox"]
+theme_override_constants/separation = 15
+
+[node name="GameplayTitle" type="Label" parent="GameplaySection"]
+text = "🎮 JOGABILIDADE"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(0.7, 1, 0.8, 1)
+
+[node name="VibrationCheckbox" type="CheckButton" parent="GameplaySection"]
+text = "📳 Vibração"
+theme_override_font_sizes/font_size = 20
+
+[node name="AutoSaveCheckbox" type="CheckButton" parent="GameplaySection"]
+text = "💾 Salvamento automático"
+theme_override_font_sizes/font_size = 20
+
+[node name="ShowGhostCheckbox" type="CheckButton" parent="GameplaySection"]
+text = "👻 Mostrar fantasma (preview)"
+theme_override_font_sizes/font_size = 20
+
+[node name="NotificationsSection" type="VBoxContainer" parent="SettingsVBox"]
+theme_override_constants/separation = 15
+
+[node name="NotificationsTitle" type="Label" parent="NotificationsSection"]
+text = "🔔 NOTIFICAÇÕES"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(1, 0.9, 0.5, 1)
+
+[node name="DailyNotifCheckbox" type="CheckButton" parent="NotificationsSection"]
+text = "Recompensa diária (10h)"
+theme_override_font_sizes/font_size = 20
+
+[node name="WeeklyNotifCheckbox" type="CheckButton" parent="NotificationsSection"]
+text = "Torneio semanal (Seg 19h)"
+theme_override_font_sizes/font_size = 20
+
+[node name="LifeNotifCheckbox" type="CheckButton" parent="NotificationsSection"]
+text = "Vida recuperada"
+theme_override_font_sizes/font_size = 20
+
+[node name="AccountSection" type="VBoxContainer" parent="SettingsVBox"]
+theme_override_constants/separation = 15
+
+[node name="AccountTitle" type="Label" parent="AccountSection"]
+text = "👤 CONTA"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(1, 0.7, 0.9, 1)
+
+[node name="RestorePurchasesButton" type="Button" parent="AccountSection"]
+text = "🔄 Restaurar Compras"
+theme_override_font_sizes/font_size = 20
+custom_minimum_size = Vector2(0, 50)
+
+[node name="SyncProgressButton" type="Button" parent="AccountSection"]
+text = "☁️ Sincronizar Progresso"
+theme_override_font_sizes/font_size = 20
+custom_minimum_size = Vector2(0, 50)
+
+[node name="DeleteDataButton" type="Button" parent="AccountSection"]
+text = "🗑️ Apagar Todos os Dados"
+theme_override_font_sizes/font_size = 20
+custom_minimum_size = Vector2(0, 50)
+theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
+
+[node name="LegalSection" type="VBoxContainer" parent="SettingsVBox"]
+theme_override_constants/separation = 10
+
+[node name="PrivacyButton" type="Button" parent="LegalSection"]
+text = "📄 Política de Privacidade"
+theme_override_font_sizes/font_size = 18
+custom_minimum_size = Vector2(0, 45)
+
+[node name="TermsButton" type="Button" parent="LegalSection"]
+text = "📋 Termos de Uso"
+theme_override_font_sizes/font_size = 18
+custom_minimum_size = Vector2(0, 45)
+
+[node name="VersionLabel" type="Label" parent="SettingsVBox"]
+text = "Block Master v1.0.0"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.5, 0.5, 0.6, 1)
+
+[node name="ConfirmPopup" type="ColorRect" parent="."]
+layout_mode = 3
+anchors_preset = 15
+color = Color(0, 0, 0, 0.9)
+visible = false
+
+[node name="ConfirmPanel" type="VBoxContainer" parent="ConfirmPopup"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180
+offset_top = -100
+offset_right = 180
+offset_bottom = 100
+theme_override_constants/separation = 15
+
+[node name="ConfirmTitle" type="Label" parent="ConfirmPanel"]
+text = "Confirmar"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="ConfirmMessage" type="Label" parent="ConfirmPanel"]
+text = "Tem certeza?"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+
+[node name="ConfirmYes" type="Button" parent="ConfirmPanel"]
+text = "SIM"
+theme_override_font_sizes/font_size = 22
+custom_minimum_size = Vector2(0, 55)
+
+[node name="ConfirmNo" type="Button" parent="ConfirmPanel"]
+text = "NÃO"
+theme_override_font_sizes/font_size = 20
+custom_minimum_size = Vector2(0, 50)

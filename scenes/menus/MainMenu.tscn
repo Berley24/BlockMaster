@@ -1,0 +1,212 @@
+[gd_scene load_steps=4 format=3 uid://dkm9v8j7x2z1y]
+[ext_resource type="Script" path="res://scripts/menus/MainMenu.gd" id="1_1"]
+[ext_resource type="Script" path="res://scripts/ui/AnimatedButton.gd" id="1_2"]
+[ext_resource type="Script" path="res://scripts/ui/DailyRewardItem.gd" id="1_3"]
+
+[node name="MainMenu" type="Control"]
+script = "res://scripts/menus/MainMenu.gd"
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 3
+anchors_preset = 15
+color = Color(0.05, 0.06, 0.1, 1)
+
+[node name="BackgroundPattern" type="TextureRect" parent="Background"]
+layout_mode = 3
+anchors_preset = 15
+texture = null
+stretch_mode = 1
+
+[node name="TitleArea" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_left = 0.5
+anchor_top = 0.0
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -200
+offset_top = 60
+offset_right = 200
+offset_bottom = 260
+theme_override_constants/separation = 10
+
+[node name="GameTitle" type="Label" parent="TitleArea"]
+text = "BLOCK MASTER"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 56
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.2, 0.6, 1, 1)
+theme_override_constants/outline_size = 3
+
+[node name="Subtitle" type="Label" parent="TitleArea"]
+text = "Puzzle Viciante de Blocos"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(0.7, 0.9, 1, 1)
+
+[node name="LeagueBadge" type="HBoxContainer" parent="TitleArea"]
+theme_override_constants/separation = 8
+
+[node name="LeagueIcon" type="TextureRect" parent="LeagueBadge"]
+custom_minimum_size = Vector2(40, 40)
+stretch_mode = 1
+
+[node name="LeagueName" type="Label" parent="LeagueBadge"]
+text = "Bronze"
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.8, 0.5, 0.2, 1)
+
+[node name="LeagueProgress" type="ProgressBar" parent="TitleArea"]
+custom_minimum_size = Vector2(300, 12)
+min_value = 0
+max_value = 100
+value = 0
+
+[node name="MenuButtons" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180
+offset_top = -100
+offset_right = 180
+offset_bottom = 100
+theme_override_constants/separation = 15
+
+[node name="PlayButton" type="AnimatedButton" parent="MenuButtons"]
+script = "res://scripts/ui/AnimatedButton.gd"
+text = "JOGAR"
+custom_minimum_size = Vector2(360, 70)
+theme_override_font_sizes/font_size = 32
+
+[node name="DailyButton" type="AnimatedButton" parent="MenuButtons"]
+script = "res://scripts/ui/AnimatedButton.gd"
+text = "🎁 RECOMPENSA DIÁRIA"
+custom_minimum_size = Vector2(360, 60)
+theme_override_font_sizes/font_size = 24
+
+[node name="ShopButton" type="AnimatedButton" parent="MenuButtons"]
+script = "res://scripts/ui/AnimatedButton.gd"
+text = "🏪 LOJA"
+custom_minimum_size = Vector2(360, 60)
+theme_override_font_sizes/font_size = 24
+
+[node name="LeaderboardButton" type="AnimatedButton" parent="MenuButtons"]
+script = "res://scripts/ui/AnimatedButton.gd"
+text = "🏆 LIGAS & RANKING"
+custom_minimum_size = Vector2(360, 60)
+theme_override_font_sizes/font_size = 24
+
+[node name="SettingsButton" type="AnimatedButton" parent="MenuButtons"]
+script = "res://scripts/ui/AnimatedButton.gd"
+text = "⚙️ CONFIGURAÇÕES"
+custom_minimum_size = Vector2(360, 60)
+theme_override_font_sizes/font_size = 24
+
+[node name="BottomBar" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -100
+offset_bottom = -10
+theme_override_constants/separation = 20
+
+[node name="CoinsDisplay" type="HBoxContainer" parent="BottomBar"]
+theme_override_constants/separation = 8
+custom_minimum_size = Vector2(180, 60)
+
+[node name="CoinIcon" type="TextureRect" parent="CoinsDisplay"]
+custom_minimum_size = Vector2(40, 40)
+stretch_mode = 1
+
+[node name="CoinsLabel" type="Label" parent="CoinsDisplay"]
+text = "0"
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
+
+[node name="LivesDisplay" type="HBoxContainer" parent="BottomBar"]
+theme_override_constants/separation = 8
+custom_minimum_size = Vector2(180, 60)
+
+[node name="HeartIcon" type="TextureRect" parent="LivesDisplay"]
+custom_minimum_size = Vector2(40, 40)
+stretch_mode = 1
+
+[node name="LivesLabel" type="Label" parent="LivesDisplay"]
+text = "5/5"
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
+
+[node name="VersionLabel" type="Label" parent="BottomBar"]
+text = "v1.0.0"
+horizontal_alignment = 2
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.5, 0.5, 0.6, 1)
+
+[node name="NoAdsBadge" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -160
+offset_top = 10
+offset_right = -10
+offset_bottom = -50
+texture_normal = null
+visible = false
+
+[node name="DailyRewardPopup" type="ColorRect" parent="."]
+layout_mode = 3
+anchors_preset = 15
+color = Color(0, 0, 0, 0.9)
+visible = false
+
+[node name="DailyRewardPanel" type="VBoxContainer" parent="DailyRewardPopup"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200
+offset_top = -250
+offset_right = 200
+offset_bottom = 250
+theme_override_constants/separation = 15
+
+[node name="DailyTitle" type="Label" parent="DailyRewardPanel"]
+text = "🎁 RECOMPENSA DIÁRIA"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
+
+[node name="StreakLabel" type="Label" parent="DailyRewardPanel"]
+text = "Sequência: 1 dia"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.7, 1, 0.7, 1)
+
+[node name="RewardItems" type="VBoxContainer" parent="DailyRewardPanel"]
+theme_override_constants/separation = 10
+
+[node name="ClaimButton" type="AnimatedButton" parent="DailyRewardPanel"]
+script = "res://scripts/ui/AnimatedButton.gd"
+text = "RESGATAR"
+custom_minimum_size = Vector2(0, 70)
+theme_override_font_sizes/font_size = 28
+
+[node name="CloseDailyButton" type="Button" parent="DailyRewardPanel"]
+text = "FECHAR"
+theme_override_font_sizes/font_size = 18
+custom_minimum_size = Vector2(0, 45)
