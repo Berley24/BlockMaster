@@ -7,16 +7,36 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with: { distribution: 'temurin', java-version: '17' }
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-        with:
-          api-level: 34
-          ndk-version: r27c
-          cmdline-tools-version: latest
+      
+      - name: Setup Android SDK (manual)
+        run: |
+          # Install only required packages
+          sudo apt-get update -qq
+          sudo apt-get install -qq -y wget unzip
+          
+          # Download command line tools
+          wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O cmdline-tools.zip
+          mkdir -p $HOME/android-sdk/cmdline-tools
+          unzip -q cmdline-tools.zip -d $HOME/android-sdk/cmdline-tools
+          mv $HOME/android-sdk/cmdline-tools/cmdline-tools $HOME/android-sdk/cmdline-tools/latest
+          rm cmdline-tools.zip
+          
+          # Set environment
+          export ANDROID_HOME=$HOME/android-sdk
+          export ANDROID_SDK_ROOT=$HOME/android-sdk
+          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
+          
+          # Accept licenses
+          yes | sdkmanager --licenses > /dev/null
+          
+          # Install only what we need for Godot export
+          sdkmanager "platforms;android-34" "build-tools;34.0.0" "platform-tools" > /dev/null
+      
       - name: Download Godot
         run: |
           wget -q https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
           unzip -q Godot_v4.3-stable_linux.x86_64.zip
+      
       - name: Install plugins
         run: |
           cd addons
@@ -24,13 +44,23 @@ jobs:
           git clone --depth 1 -b 4.x https://github.com/godotengine/godot-admob-plugin.git godotadmob
           git clone --depth 1 -b 4.x https://github.com/godotengine/godot-play-games-services.git godotplaygamesservices
           git clone --depth 1 -b 4.x https://github.com/godotengine/godot-notifications.git godotnotifications
+      
       - name: Fix scripts (// operator)
         run: |
           sed -i 's|daily_streak // 7|int(daily_streak / 7)|g' scripts/autoload/GameManager.gd
           sed -i 's|elapsed // LIVES_RECOVERY_TIME|int(elapsed / LIVES_RECOVERY_TIME)|g' scripts/autoload/GameManager.gd
+      
       - name: Build APK
+        env:
+          ANDROID_HOME: ${{ env.ANDROID_HOME }}
+          ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
+          PATH: ${{ env.PATH }}:${{ env.ANDROID_HOME }}/cmdline-tools/latest/bin:${{ env.ANDROID_HOME }}/platform-tools
         run: |
+          export ANDROID_HOME=$HOME/android-sdk
+          export ANDROID_SDK_ROOT=$HOME/android-sdk
+          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
           ./Godot_v4.3-stable_linux.x86_64 --headless --export-debug "Android" build.apk
+      
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
