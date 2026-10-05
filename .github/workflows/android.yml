@@ -3,27 +3,45 @@ on: [push, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with: { distribution: 'temurin', java-version: '17' }
       
-      - name: Setup Android SDK (versão fixa)
-        uses: android-actions/setup-android@v3
-        with:
-          api-level: 34
-          ndk-version: r27c
-          cmdline-tools-version: '9.0'
+      - name: Install Android SDK (manual, sem actions quebradas)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -qq -y wget unzip
+          
+          # SDK tools versão estável
+          wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O tools.zip
+          mkdir -p $HOME/android-sdk/cmdline-tools
+          unzip -q tools.zip -d $HOME/android-sdk/cmdline-tools
+          mv $HOME/android-sdk/cmdline-tools/cmdline-tools $HOME/android-sdk/cmdline-tools/latest
+          rm tools.zip
+          
+          export ANDROID_HOME=$HOME/android-sdk
+          export ANDROID_SDK_ROOT=$HOME/android-sdk
+          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
+          
+          # Aceita licenças
+          yes | sdkmanager --licenses > /dev/null
+          
+          # Só o necessário para build
+          sdkmanager "platforms;android-34" "build-tools;34.0.0" "platform-tools" > /dev/null
       
       - name: Download Godot + Export Templates
         run: |
+          # Godot 4.3 stable
           wget -q https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
           unzip -q Godot_v4.3-stable_linux.x86_64.zip
           
-          wget -q https://github.com/godotengine/godot-builds/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz -O export_templates.tpz
+          # Export templates (OBRIGATÓRIO para Android)
+          wget -q https://github.com/godotengine/godot-builds/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz -O templates.tpz
           mkdir -p $HOME/.local/share/godot/export_templates/4.3.stable
-          unzip -q export_templates.tpz -d $HOME/.local/share/godot/export_templates/4.3.stable
-          rm export_templates.tpz
+          unzip -q templates.tpz -d $HOME/.local/share/godot/export_templates/4.3.stable
+          rm templates.tpz
       
       - name: Install plugins
         run: |
@@ -39,13 +57,11 @@ jobs:
           sed -i 's|elapsed // LIVES_RECOVERY_TIME|int(elapsed / LIVES_RECOVERY_TIME)|g' scripts/autoload/GameManager.gd
       
       - name: Build APK
-        env:
-          ANDROID_HOME: ${{ env.ANDROID_HOME }}
-          ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
         run: |
           export ANDROID_HOME=$HOME/android-sdk
           export ANDROID_SDK_ROOT=$HOME/android-sdk
-          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/9.0/bin:$ANDROID_HOME/platform-tools
+          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
+          
           ./Godot_v4.3-stable_linux.x86_64 --headless --export-debug "Android" build.apk
       
       - name: Upload APK
