@@ -10,32 +10,33 @@ jobs:
       
       - name: Setup Android SDK (manual)
         run: |
-          # Install only required packages
           sudo apt-get update -qq
           sudo apt-get install -qq -y wget unzip
           
-          # Download command line tools
           wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O cmdline-tools.zip
           mkdir -p $HOME/android-sdk/cmdline-tools
           unzip -q cmdline-tools.zip -d $HOME/android-sdk/cmdline-tools
           mv $HOME/android-sdk/cmdline-tools/cmdline-tools $HOME/android-sdk/cmdline-tools/latest
           rm cmdline-tools.zip
           
-          # Set environment
           export ANDROID_HOME=$HOME/android-sdk
           export ANDROID_SDK_ROOT=$HOME/android-sdk
           export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
           
-          # Accept licenses
           yes | sdkmanager --licenses > /dev/null
-          
-          # Install only what we need for Godot export
           sdkmanager "platforms;android-34" "build-tools;34.0.0" "platform-tools" > /dev/null
       
-      - name: Download Godot
+      - name: Download Godot + Export Templates
         run: |
+          # Godot engine
           wget -q https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
           unzip -q Godot_v4.3-stable_linux.x86_64.zip
+          
+          # Export templates (required for Android export)
+          wget -q https://github.com/godotengine/godot-builds/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz -O export_templates.tpz
+          mkdir -p $HOME/.local/share/godot/export_templates/4.3.stable
+          unzip -q export_templates.tpz -d $HOME/.local/share/godot/export_templates/4.3.stable
+          rm export_templates.tpz
       
       - name: Install plugins
         run: |
@@ -54,7 +55,6 @@ jobs:
         env:
           ANDROID_HOME: ${{ env.ANDROID_HOME }}
           ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
-          PATH: ${{ env.PATH }}:${{ env.ANDROID_HOME }}/cmdline-tools/latest/bin:${{ env.ANDROID_HOME }}/platform-tools
         run: |
           export ANDROID_HOME=$HOME/android-sdk
           export ANDROID_SDK_ROOT=$HOME/android-sdk
