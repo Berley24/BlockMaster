@@ -9,6 +9,10 @@ jobs:
         with: { distribution: 'temurin', java-version: '17' }
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          api-level: 34
+          ndk-version: r27c
+          cmdline-tools-version: latest
       - name: Download Godot
         run: |
           wget -q https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
